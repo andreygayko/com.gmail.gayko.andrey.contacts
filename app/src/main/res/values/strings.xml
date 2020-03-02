@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Contacts</string>
     <string name="delete_all">Delete all</string>
+    <string name="confirm_delete">You are going to delete all contacts. Are you sure?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

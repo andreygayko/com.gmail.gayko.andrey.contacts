@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView contacts;
     ContactsAdapter contactsAdapter;
-    Button deleteAll;
+    Button deleteAll, ok, cancel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -27,10 +28,7 @@ public class MainActivity extends AppCompatActivity {
         deleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dropTable();
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                dialog();
             }
         });
         contacts.setLayoutManager(new LinearLayoutManager(this));
@@ -63,4 +61,25 @@ public class MainActivity extends AppCompatActivity {
         db.dropTable();
     }
 
+    public void dialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.confirm_delete);
+        ok = dialog.findViewById(R.id.btn_del_y);
+        cancel = dialog.findViewById(R.id.btn_del_n);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dropTable();
+                recreate();
+                dialog.cancel();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
 }
