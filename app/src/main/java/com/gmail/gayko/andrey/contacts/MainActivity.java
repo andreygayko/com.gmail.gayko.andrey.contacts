@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,16 +16,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView contacts;
-    ContactsAdapter contactsAdapter;
-    Button deleteAll, ok, cancel;
+    private final Context context = this;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
-        contacts = findViewById(R.id.rv_contacts);
-        deleteAll = findViewById(R.id.btn_del_db);
+        RecyclerView contacts = findViewById(R.id.rv_contacts);
+        Button newContact = findViewById(R.id.btn_add);
+        Button deleteAll = findViewById(R.id.btn_del_db);
+        newContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AddContactActivity.class);
+                startActivity(intent);
+            }
+        });
         deleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
         contacts.setLayoutManager(new LinearLayoutManager(this));
         //fillTable();
         ArrayList<String> conts = getAllContacts();
-        contactsAdapter = new ContactsAdapter(this, conts);
-        contacts.setAdapter(contactsAdapter);
-        //dropTable();
+        contacts.setAdapter(new ContactsAdapter(this, conts));
     }
 
     public ArrayList<String> getAllContacts() {
@@ -64,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     public void dialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.confirm_delete);
-        ok = dialog.findViewById(R.id.btn_del_y);
-        cancel = dialog.findViewById(R.id.btn_del_n);
+        Button ok = dialog.findViewById(R.id.btn_del_y);
+        Button cancel = dialog.findViewById(R.id.btn_del_n);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

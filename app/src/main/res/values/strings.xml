@@ -4,4 +4,9 @@
     <string name="confirm_delete">You are going to delete all contacts. Are you sure?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="new_contact">New</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="address">Address</string>
+    <string name="new_contact_title">New contact</string>
 </resources>
