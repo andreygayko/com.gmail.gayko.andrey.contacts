@@ -27,9 +27,15 @@ public class AddContactActivity extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewContact();
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
+                if(name.getText().toString().isEmpty()){
+                    name.setError("Name is empty");
+                }
+                else {
+                    addNewContact();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }

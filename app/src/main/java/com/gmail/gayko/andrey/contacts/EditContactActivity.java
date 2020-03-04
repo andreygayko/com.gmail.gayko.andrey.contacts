@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,11 +31,16 @@ public class EditContactActivity extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveContactInfo(id);
-                Intent i = new Intent(context, ContactActivity.class);
-                i.putExtra("id", id);
-                context.startActivity(i);
-                finish();
+                if(name.getText().toString().isEmpty()){
+                    name.setError("Name is empty");
+                }
+                else {
+                    saveContactInfo(id);
+                    Intent i = new Intent(context, ContactActivity.class);
+                    i.putExtra("id", id);
+                    context.startActivity(i);
+                    finish();
+                }
             }
         });
 
