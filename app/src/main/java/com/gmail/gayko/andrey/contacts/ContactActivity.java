@@ -3,6 +3,8 @@ package com.gmail.gayko.andrey.contacts;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,18 +18,34 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_contact);
         name = findViewById(R.id.tv_name);
         phone = findViewById(R.id.tv_phone);
         address = findViewById(R.id.tv_address);
+        Button edit = findViewById(R.id.btn_edit);
+
         Intent intent = getIntent();
-        int id = intent.getIntExtra("id", -1);
-        getContactInfo(id);
+        final int id = intent.getIntExtra("id", -1);
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, EditContactActivity.class);
+                i.putExtra("id", id);
+                context.startActivity(i);
+            }
+        });
+
+        setContactInfo(getContactInfo(id));
     }
 
-    public void getContactInfo(int id){
+    public Contact getContactInfo(int id){
         DatabaseHelper db = new DatabaseHelper(context);
-        Contact contact = db.getContact(id);
+        return db.getContact(id);
+    }
+
+    public void setContactInfo(Contact contact){
         name.setText(contact.getName());
         phone.setText(contact.getPhoneNumber());
         address.setText(contact.getAddress());

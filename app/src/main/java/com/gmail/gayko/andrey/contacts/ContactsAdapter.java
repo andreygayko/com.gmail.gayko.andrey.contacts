@@ -84,7 +84,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
         @Override
         public void onClick(View view) {
-            System.out.println("11111111" + getLayoutPosition());
             this.itemClickListener.onItemClick(view, getLayoutPosition());
         }
     }
