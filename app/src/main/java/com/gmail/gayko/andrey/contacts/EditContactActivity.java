@@ -36,9 +36,8 @@ public class EditContactActivity extends AppCompatActivity {
                 }
                 else {
                     saveContactInfo(id);
-                    Intent i = new Intent(context, ContactActivity.class);
-                    i.putExtra("id", id);
-                    context.startActivity(i);
+                    Intent i = new Intent();
+                    setResult(RESULT_OK, i);
                     finish();
                 }
             }

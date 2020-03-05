@@ -33,7 +33,7 @@ public class ContactActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(context, EditContactActivity.class);
                 i.putExtra("id", id);
-                context.startActivity(i);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -51,4 +51,10 @@ public class ContactActivity extends AppCompatActivity {
         address.setText(contact.getAddress());
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK)
+            recreate();
+    }
 }
