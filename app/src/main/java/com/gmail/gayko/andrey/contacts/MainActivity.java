@@ -48,12 +48,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         contacts.setLayoutManager(new LinearLayoutManager(this));
-        //ArrayList<String> conts = getAllContacts();
         LinkedHashMap<Integer, String> conts = getAllContacts();
         contacts.setAdapter(new ContactsAdapter(this, conts));
     }
 
-    //public ArrayList<String> getAllContacts() {
     public LinkedHashMap<Integer, String> getAllContacts() {
         DatabaseHelper db = new DatabaseHelper(this);
         List<Contact> contacts = db.getAllContacts();
@@ -62,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
         for (Contact c : contacts) {
             names.add(c.getName());
             conts.put(c.getId(), c.getName());
-            System.out.println(c.getId() + " " + c.getName());
         }
-        //return names;
         return conts;
     }
 

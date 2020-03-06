@@ -16,11 +16,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
 
     private Context parent;
     private int numberItems;
-    //private ArrayList<String> contacts;
     private LinkedHashMap<Integer, String> contacts;
     private static int viewHolderCount;
 
-    //public ContactsAdapter(Context parent, ArrayList<String> contacts) {
     public ContactsAdapter(Context parent, LinkedHashMap<Integer, String> contacts) {
         this.numberItems = contacts.size();
         this.parent = parent;
@@ -49,8 +47,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             @Override
             public void onItemClick(View view, int position) {
                 Integer[] keys = contacts.keySet().toArray(new Integer[0]);
-                int key = keys[position-1];
-                System.out.println(key);
+                int key = keys[position];
                 Intent intent = new Intent(parent, ContactActivity.class);
                 intent.putExtra("id", key);
                 parent.startActivity(intent);
@@ -75,7 +72,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
         }
 
         public void bind(int index) {
-            name.setText(contacts.get(index));
+            name.setText(contacts.get(index + 1));
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {
