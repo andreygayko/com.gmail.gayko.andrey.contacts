@@ -24,6 +24,7 @@ public class ContactActivity extends AppCompatActivity {
         phone = findViewById(R.id.tv_phone);
         address = findViewById(R.id.tv_address);
         Button edit = findViewById(R.id.btn_edit);
+        final Button delete = findViewById(R.id.btn_delete);
 
         Intent intent = getIntent();
         final int id = intent.getIntExtra("id", -1);
@@ -34,6 +35,16 @@ public class ContactActivity extends AppCompatActivity {
                 Intent i = new Intent(context, EditContactActivity.class);
                 i.putExtra("id", id);
                 startActivityForResult(i, 1);
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteContact(getContactInfo(id));
+                Intent i = new Intent(context, MainActivity.class);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -49,6 +60,11 @@ public class ContactActivity extends AppCompatActivity {
         name.setText(contact.getName());
         phone.setText(contact.getPhoneNumber());
         address.setText(contact.getAddress());
+    }
+
+    public void deleteContact(Contact contact){
+        DatabaseHelper db = new DatabaseHelper(context);
+        db.deleteContact(contact);
     }
 
     @Override

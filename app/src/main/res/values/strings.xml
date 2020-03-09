@@ -11,4 +11,5 @@
     <string name="new_contact_title">New contact</string>
     <string name="fill_db">Fill db</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
