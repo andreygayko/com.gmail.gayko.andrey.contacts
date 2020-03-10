@@ -1,9 +1,5 @@
 package com.gmail.gayko.andrey.contacts;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,30 +7,38 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ContactsAdapter.ItemClickListener {
 
     private final Context context = this;
+    RecyclerView contacts;
+    LinkedHashMap<Integer, String> contactsList = new LinkedHashMap<>();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
-        RecyclerView contacts = findViewById(R.id.rv_contacts);
+        contacts = findViewById(R.id.rv_contacts);
+
         Button newContact = findViewById(R.id.btn_add);
         Button fillDb = findViewById(R.id.btn_fill_db);
         Button deleteAll = findViewById(R.id.btn_del_db);
+
         newContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AddContactActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
+
         fillDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,21 +51,18 @@ public class MainActivity extends AppCompatActivity {
                 dialog();
             }
         });
-        contacts.setLayoutManager(new LinearLayoutManager(this));
-        LinkedHashMap<Integer, String> conts = getAllContacts();
-        contacts.setAdapter(new ContactsAdapter(this, conts));
+
+        contactsList = getAllContacts();
+        initRecycleView();
     }
 
     public LinkedHashMap<Integer, String> getAllContacts() {
         DatabaseHelper db = new DatabaseHelper(this);
         List<Contact> contacts = db.getAllContacts();
-        LinkedHashMap<Integer, String> conts = new LinkedHashMap<>();
-        ArrayList<String> names = new ArrayList<>();
         for (Contact c : contacts) {
-            names.add(c.getName());
-            conts.put(c.getId(), c.getName());
+            contactsList.put(c.getId(), c.getName());
         }
-        return conts;
+        return contactsList;
     }
 
     public void fillTable() {
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.confirm_delete);
         Button ok = dialog.findViewById(R.id.btn_del_y);
         Button cancel = dialog.findViewById(R.id.btn_del_n);
+
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +110,30 @@ public class MainActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
+
         dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            recreate();
+        }
+    }
+
+    private void initRecycleView(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        contacts.setLayoutManager(linearLayoutManager);
+        contacts.setAdapter(new ContactsAdapter(contactsList, this));
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        Integer[] keys = contactsList.keySet().toArray(new Integer[0]);
+        int key = keys[position];
+        intent.putExtra("id", key);
+        startActivityForResult(intent, 1);
     }
 }

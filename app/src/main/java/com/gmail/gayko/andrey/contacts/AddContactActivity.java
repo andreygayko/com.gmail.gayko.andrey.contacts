@@ -32,8 +32,8 @@ public class AddContactActivity extends AppCompatActivity {
                 }
                 else {
                     addNewContact();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    startActivity(intent);
+                    Intent i = new Intent();
+                    setResult(RESULT_OK, i);
                     finish();
                 }
             }

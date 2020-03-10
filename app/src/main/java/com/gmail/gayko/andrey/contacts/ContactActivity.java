@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ContactActivity extends AppCompatActivity  {
+public class ContactActivity extends AppCompatActivity {
 
     private Context context = this;
     private TextView name, phone, address;
@@ -65,8 +65,8 @@ public class ContactActivity extends AppCompatActivity  {
 
     public void delete() {
         deleteContact(getContactInfo(id));
-        Intent i = new Intent(context, MainActivity.class);
-        startActivity(i);
+        Intent i = new Intent();
+        setResult(RESULT_OK, i);
         finish();
     }
 
@@ -80,7 +80,6 @@ public class ContactActivity extends AppCompatActivity  {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.edit:
-                        System.out.println("Edit");
                         edit();
                         return true;
                     case R.id.delete:
@@ -96,7 +95,16 @@ public class ContactActivity extends AppCompatActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
+        if (resultCode == RESULT_OK) {
+            setResult(RESULT_OK, new Intent());
             recreate();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

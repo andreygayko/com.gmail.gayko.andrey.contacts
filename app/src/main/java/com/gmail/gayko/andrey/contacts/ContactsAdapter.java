@@ -1,7 +1,5 @@
 package com.gmail.gayko.andrey.contacts;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,74 +12,55 @@ import java.util.LinkedHashMap;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder> {
 
-    private Context parent;
-    private int numberItems;
     private LinkedHashMap<Integer, String> contacts;
-    private static int viewHolderCount;
+    private ItemClickListener itemClickListener;
 
-    public ContactsAdapter(Context parent, LinkedHashMap<Integer, String> contacts) {
-        this.numberItems = contacts.size();
-        this.parent = parent;
+    public ContactsAdapter(LinkedHashMap<Integer, String> contacts, ItemClickListener itemClickListener) {
         this.contacts = contacts;
-        viewHolderCount = 0;
+        this.itemClickListener = itemClickListener;
     }
 
-    @NonNull
     @Override
     public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_preview, parent, false);
+        return new ContactsViewHolder(view, itemClickListener);
+    }
 
-        Context context = parent.getContext();
-        int layoutForListItem = R.layout.contact_preview;
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(layoutForListItem, parent, false);
-        ContactsViewHolder viewHolder = new ContactsViewHolder(view);
-        viewHolderCount++;
-        return viewHolder;
+
+    @Override
+    public int getItemCount() {
+        return contacts.size();
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContactsViewHolder holder, int position) {
         holder.bind(position);
-
-        holder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Integer[] keys = contacts.keySet().toArray(new Integer[0]);
-                int key = keys[position];
-                Intent intent = new Intent(parent, ContactActivity.class);
-                intent.putExtra("id", key);
-                parent.startActivity(intent);
-            }
-        });
     }
 
-    @Override
-    public int getItemCount() {
-        return numberItems;
-    }
+    class ContactsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public class ContactsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        private ItemClickListener itemClickListener;
+        ItemClickListener itemClickListener;
         TextView name;
 
-        public ContactsViewHolder(View view) {
+        public ContactsViewHolder(View view, ItemClickListener itemClickListener) {
             super(view);
+            this.itemClickListener = itemClickListener;
             name = view.findViewById(R.id.tv_preview);
             view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.onItemClick(getAdapterPosition());
         }
 
         public void bind(int index) {
             name.setText(contacts.get(index + 1));
         }
-
-        public void setItemClickListener(ItemClickListener itemClickListener) {
-            this.itemClickListener = itemClickListener;
-        }
-
-        @Override
-        public void onClick(View view) {
-            this.itemClickListener.onItemClick(view, getLayoutPosition());
-        }
     }
+
+    interface ItemClickListener {
+        void onItemClick(int position);
+    }
+
 }
