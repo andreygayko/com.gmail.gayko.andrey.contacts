@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ContactActivity extends AppCompatActivity {
 
     private Context context = this;
-    private TextView name, phone, address;
+    private TextView name, phone, address, birthday;
     private int id;
     private boolean updated;
 
@@ -28,6 +28,7 @@ public class ContactActivity extends AppCompatActivity {
         name = findViewById(R.id.tv_name);
         phone = findViewById(R.id.tv_phone);
         address = findViewById(R.id.tv_address);
+        birthday = findViewById(R.id.tv_birthday);
         Button menu = findViewById(R.id.btn_menu);
 
         Intent intent = getIntent();
@@ -52,6 +53,7 @@ public class ContactActivity extends AppCompatActivity {
         name.setText(contact.getName());
         phone.setText(contact.getPhoneNumber());
         address.setText(contact.getAddress());
+        birthday.setText(contact.getBirthDate());
     }
 
     public void deleteContact(Contact contact) {

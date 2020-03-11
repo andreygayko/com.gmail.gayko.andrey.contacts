@@ -67,21 +67,21 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.I
 
     public void fillTable() {
         DatabaseHelper db = new DatabaseHelper(this);
-        db.addContact(new Contact("name1", "num1", "address1"));
-        db.addContact(new Contact("name2", "num2", "address2"));
-        db.addContact(new Contact("name3", "num3", "address3"));
-        db.addContact(new Contact("name4", "num4", "address4"));
-        db.addContact(new Contact("name5", "num5", "address5"));
-        db.addContact(new Contact("name6", "num6", "address6"));
-        db.addContact(new Contact("name7", "num7", "address7"));
-        db.addContact(new Contact("name8", "num8", "address8"));
-        db.addContact(new Contact("name9", "num9", "address9"));
-        db.addContact(new Contact("name10", "num10", "address10"));
-        db.addContact(new Contact("name11", "num11", "address11"));
-        db.addContact(new Contact("name12", "num12", "address12"));
-        db.addContact(new Contact("name13", "num13", "address13"));
-        db.addContact(new Contact("name14", "num14", "address14"));
-        db.addContact(new Contact("name15", "num15", "address15"));
+        db.addContact(new Contact("name1", "num1", "address1", "1111-11-11"));
+        db.addContact(new Contact("name2", "num2", "address2", "1111-11-11"));
+        db.addContact(new Contact("name3", "num3", "address3", "1111-11-11"));
+        db.addContact(new Contact("name4", "num4", "address4", "1111-11-11"));
+        db.addContact(new Contact("name5", "num5", "address5", "1111-11-11"));
+        db.addContact(new Contact("name6", "num6", "address6", "1111-11-11"));
+        db.addContact(new Contact("name7", "num7", "address7", "1111-11-11"));
+        db.addContact(new Contact("name8", "num8", "address8", "1111-11-11"));
+        db.addContact(new Contact("name9", "num9", "address9", "1111-11-11"));
+        db.addContact(new Contact("name10", "num10", "address10", "1111-11-11"));
+        db.addContact(new Contact("name11", "num11", "address11", "1111-11-11"));
+        db.addContact(new Contact("name12", "num12", "address12", "1111-11-11"));
+        db.addContact(new Contact("name13", "num13", "address13", "1111-11-11"));
+        db.addContact(new Contact("name14", "num14", "address14", "1111-11-11"));
+        db.addContact(new Contact("name15", "num15", "address15", "1111-11-11"));
         recreate();
     }
 

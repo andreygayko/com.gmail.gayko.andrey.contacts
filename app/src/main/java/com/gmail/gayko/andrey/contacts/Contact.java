@@ -6,21 +6,24 @@ public class Contact {
     private String name;
     private String phoneNumber;
     private String address;
+    private String birthDate;
 
     public Contact(){
     }
 
-    public Contact(int id, String name, String phoneNumber, String address) {
+    public Contact(int id, String name, String phoneNumber, String address, String birthDate) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.birthDate = birthDate;
     }
 
-    public Contact(String name, String phoneNumber, String address) {
+    public Contact(String name, String phoneNumber, String address, String birthDate) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.birthDate = birthDate;
     }
 
     public int getId() {
@@ -53,5 +56,13 @@ public class Contact {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 }

@@ -12,4 +12,5 @@
     <string name="fill_db">Fill db</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="birthday">Birthday</string>
 </resources>

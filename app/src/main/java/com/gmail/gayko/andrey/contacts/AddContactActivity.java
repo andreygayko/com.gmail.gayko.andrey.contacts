@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AddContactActivity extends AppCompatActivity {
 
     private final Context context = this;
-    EditText name, phone, address;
+    EditText name, phone, address, birthday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class AddContactActivity extends AppCompatActivity {
         name = findViewById(R.id.et_name);
         phone = findViewById(R.id.et_phone);
         address = findViewById(R.id.et_address);
+        birthday = findViewById(R.id.et_birthday);
         Button ok = findViewById(R.id.btn_create);
 
         ok.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +46,7 @@ public class AddContactActivity extends AppCompatActivity {
         db.addContact(new Contact(
                 name.getText().toString(),
                 phone.getText().toString(),
-                address.getText().toString()));
+                address.getText().toString(),
+                birthday.getText().toString()));
     }
 }

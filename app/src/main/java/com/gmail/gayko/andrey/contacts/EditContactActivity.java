@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EditContactActivity extends AppCompatActivity {
 
     Context context = this;
-    EditText name, phone, address;
+    EditText name, phone, address, birthday;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class EditContactActivity extends AppCompatActivity {
         name = findViewById(R.id.et_name);
         phone = findViewById(R.id.et_phone);
         address = findViewById(R.id.et_address);
+        birthday = findViewById(R.id.et_birthday);
         Button ok = findViewById(R.id.btn_create);
 
         Intent intent = getIntent();
@@ -55,6 +56,7 @@ public class EditContactActivity extends AppCompatActivity {
         name.setText(contact.getName());
         phone.setText(contact.getPhoneNumber());
         address.setText(contact.getAddress());
+        birthday.setText(contact.getBirthDate());
     }
 
     public void saveContactInfo(int id) {
@@ -63,7 +65,8 @@ public class EditContactActivity extends AppCompatActivity {
                 id,
                 name.getText().toString(),
                 phone.getText().toString(),
-                address.getText().toString());
+                address.getText().toString(),
+                birthday.getText().toString());
         db.updateContact(contact);
     }
 }

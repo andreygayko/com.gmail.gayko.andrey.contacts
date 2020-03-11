@@ -18,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_PHONE = "phone";
     private static final String KEY_ADDRESS = "address";
+    private static final String KEY_BIRTH_DATE = "date";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, "
-                + KEY_PHONE + " TEXT, " + KEY_ADDRESS + " TEXT" + ")";
+                + KEY_PHONE + " TEXT, " + KEY_ADDRESS + " TEXT, " + KEY_BIRTH_DATE + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -50,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_NAME, contact.getName());
         values.put(KEY_PHONE, contact.getPhoneNumber());
         values.put(KEY_ADDRESS, contact.getAddress());
+        values.put(KEY_BIRTH_DATE, contact.getBirthDate());
 
         db.insert(TABLE_CONTACTS, null, values);
         db.close();
@@ -58,14 +60,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     Contact getContact(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_ID, KEY_NAME, KEY_PHONE, KEY_ADDRESS}, KEY_ID
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_ID, KEY_NAME, KEY_PHONE, KEY_ADDRESS, KEY_BIRTH_DATE}, KEY_ID
                 + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
 
-        Contact contact = new Contact(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
-
+        Contact contact = new Contact(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
         return contact;
     }
 
@@ -83,6 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 contact.setName(cursor.getString(1));
                 contact.setPhoneNumber(cursor.getString(2));
                 contact.setAddress(cursor.getString(3));
+                contact.setBirthDate(cursor.getString(4));
 
                 contacts.add(contact);
             }
@@ -98,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_NAME, contact.getName());
         values.put(KEY_PHONE, contact.getPhoneNumber());
         values.put(KEY_ADDRESS, contact.getAddress());
+        values.put(KEY_BIRTH_DATE, contact.getBirthDate());
 
         return db.update(TABLE_CONTACTS, values, KEY_ID + "=?",
                 new String[]{String.valueOf(contact.getId())});
