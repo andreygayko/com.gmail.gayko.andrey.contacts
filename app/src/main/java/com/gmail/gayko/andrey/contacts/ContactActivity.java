@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +18,7 @@ public class ContactActivity extends AppCompatActivity {
     private Context context = this;
     private TextView name, phone, address;
     private int id;
+    private boolean updated;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,18 +95,34 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("updated", updated);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        updated = savedInstanceState.getBoolean("updated");
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK) {
             setResult(RESULT_OK, new Intent());
+            updated = true;
             recreate();
         }
     }
 
     @Override
     public void onBackPressed() {
+        if(updated){
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
+        }
         finish();
     }
 }
