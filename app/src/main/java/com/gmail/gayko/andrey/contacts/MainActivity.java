@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.I
     public void dialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.confirm_delete);
+        TextView delete = dialog.findViewById(R.id.tv_delete);
+        delete.setText(R.string.confirm_delete_all);
         Button ok = dialog.findViewById(R.id.btn_del_y);
         Button cancel = dialog.findViewById(R.id.btn_del_n);
 

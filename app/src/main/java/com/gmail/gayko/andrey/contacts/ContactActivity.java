@@ -1,5 +1,6 @@
 package com.gmail.gayko.andrey.contacts;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,10 +69,31 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     public void delete() {
-        deleteContact(getContactInfo(id));
-        Intent i = new Intent();
-        setResult(RESULT_OK, i);
-        finish();
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.confirm_delete);
+            TextView delete = dialog.findViewById(R.id.tv_delete);
+            delete.setText(R.string.confirm_delete_contact);
+            Button ok = dialog.findViewById(R.id.btn_del_y);
+            Button cancel = dialog.findViewById(R.id.btn_del_n);
+
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteContact(getContactInfo(id));
+                    Intent i = new Intent();
+                    setResult(RESULT_OK, i);
+                    finish();
+                    dialog.cancel();
+                }
+            });
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
+
+            dialog.show();
     }
 
     public void showPopup(View v) {

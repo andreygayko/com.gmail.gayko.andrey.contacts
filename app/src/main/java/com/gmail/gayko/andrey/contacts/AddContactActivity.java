@@ -58,26 +58,29 @@ public class AddContactActivity extends AppCompatActivity {
             name.setError("Name is empty");
             return false;
         }
-        if(bday.length()!=0 && bday.length()!=10){
-            birthday.setError("Format YYYY-MM-DD");
-            return false;
-        }
-        //if(Integer.parseInt(bday.substring(0, 4)) < LocalDateTime.now().minusYears(100).getYear()){ //Requires Android api 26
-        if (!bday.matches("^[1-2][0-9][0-9][0-9][-][0-1][0-9][-][0-3][0-9]")){
-            birthday.setError("Incorrect date");
-            return false;
-        }
-        if(Integer.parseInt(bday.substring(0, 4)) < 1900 || Integer.parseInt(bday.substring(0, 4)) > 2100){
-            birthday.setError("Incorrect year");
-            return false;
-        }
-        if(Integer.parseInt(bday.substring(5, 7)) < 1 || Integer.parseInt(bday.substring(5, 7)) > 12){
-            birthday.setError("Incorrect month");
-            return false;
-        }
-        if(Integer.parseInt(bday.substring(8, 10)) < 1 || Integer.parseInt(bday.substring(8, 10)) > 31){
-            birthday.setError("Incorrect day");
-            return false;
+        if(bday.length()!=0) {
+            if (bday.length() != 10) {
+                birthday.setError("Format YYYY-MM-DD");
+                return false;
+            }
+            //if(Integer.parseInt(bday.substring(0, 4)) < LocalDateTime.now().minusYears(100).getYear()){ //Requires Android api 26
+            if (!bday.matches("^[1-2][0-9][0-9][0-9][-][0-1][0-9][-][0-3][0-9]")) {
+                birthday.setError("Incorrect date");
+                return false;
+            }
+            if (Integer.parseInt(bday.substring(0, 4)) < 1900 || Integer.parseInt(bday.substring(0, 4)) > 2100) {
+                birthday.setError("Incorrect year");
+                return false;
+            }
+            if (Integer.parseInt(bday.substring(5, 7)) < 1 || Integer.parseInt(bday.substring(5, 7)) > 12) {
+                birthday.setError("Incorrect month");
+                return false;
+            }
+            if (Integer.parseInt(bday.substring(8, 10)) < 1 || Integer.parseInt(bday.substring(8, 10)) > 31) {
+                birthday.setError("Incorrect day");
+                return false;
+            }
+            return true;
         }
         else {
             return true;
