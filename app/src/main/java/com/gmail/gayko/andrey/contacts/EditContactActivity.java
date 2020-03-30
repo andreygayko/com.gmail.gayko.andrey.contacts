@@ -37,9 +37,7 @@ public class EditContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (name.getText().toString().isEmpty()) {
-                    name.setError("Name is empty");
-                } else {
+                if (validation()) {
                     saveContactInfo(id);
                     Intent i = new Intent();
                     setResult(RESULT_OK, i);
@@ -72,6 +70,39 @@ public class EditContactActivity extends AppCompatActivity {
                 address.getText().toString(),
                 birthday.getText().toString());
         db.updateContact(contact);
+    }
+
+    public boolean validation() {
+        String bday = birthday.getText().toString();
+
+        if (name.getText().toString().isEmpty()) {
+            name.setError("Name is empty");
+            return false;
+        }
+        if(bday.length()!=0 && bday.length()!=10){
+            birthday.setError("Format YYYY-MM-DD");
+            return false;
+        }
+        //if(Integer.parseInt(bday.substring(0, 4)) < LocalDateTime.now().minusYears(100).getYear()){ //Requires Android api 26
+        if (!bday.matches("^[1-2][0-9][0-9][0-9][-][0-1][0-9][-][0-3][0-9]")){
+            birthday.setError("Incorrect date");
+            return false;
+        }
+        if(Integer.parseInt(bday.substring(0, 4)) < 1900 || Integer.parseInt(bday.substring(0, 4)) > 2100){
+            birthday.setError("Incorrect year");
+            return false;
+        }
+        if(Integer.parseInt(bday.substring(5, 7)) < 1 || Integer.parseInt(bday.substring(5, 7)) > 12){
+            birthday.setError("Incorrect month");
+            return false;
+        }
+        if(Integer.parseInt(bday.substring(8, 10)) < 1 || Integer.parseInt(bday.substring(8, 10)) > 31){
+            birthday.setError("Incorrect day");
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     TextWatcher birthdayTextWatcher = new TextWatcher() {
