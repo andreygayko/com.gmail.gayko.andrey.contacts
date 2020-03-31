@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.I
         Button newContact = findViewById(R.id.btn_add);
         Button fillDb = findViewById(R.id.btn_fill_db);
         Button deleteAll = findViewById(R.id.btn_del_db);
+        Button notif = findViewById(R.id.btn_notify);
 
         newContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +51,13 @@ public class MainActivity extends AppCompatActivity implements ContactsAdapter.I
             @Override
             public void onClick(View view) {
                 dialog();
+            }
+        });
+
+        notif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               new Notification(context).notification();
             }
         });
 

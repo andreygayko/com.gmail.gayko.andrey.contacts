@@ -13,6 +13,13 @@
         android:text="@string/new_contact"/>
 
     <Button
+        android:id="@+id/btn_notify"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="120dp"/>
+
+    <Button
         android:id="@+id/btn_fill_db"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
